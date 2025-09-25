@@ -1,0 +1,58 @@
+﻿@model IdentitySample.Models.Truck
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Truck</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RegistrationNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.size)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.size)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.twoColour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.twoColour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.colour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.colour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.colour2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.colour2)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.truckId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

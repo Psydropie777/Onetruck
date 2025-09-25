@@ -1,0 +1,75 @@
+﻿@model IEnumerable<IdentitySample.Models.Truck>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RegistrationNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.truckBrandId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.truckModelId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.size)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.twoColour)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.colour)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.colour2)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RegistrationNo)
+        </td>
+        <td>
+            <img src="@Url.Action("RenderImage", "Trucks", new { id = item.truckId})" width="50" height="60" />
+        </td>
+        <td>
+            @Html.DisplayName(item.getTruckBrand())
+        </td>
+        <td>
+            @Html.DisplayName(item.getTruckModel())
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.twoColour)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.colour)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.colour2)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.truckId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.truckId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.truckId })
+        </td>
+    </tr>
+}
+
+</table>

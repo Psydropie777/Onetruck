@@ -1,0 +1,90 @@
+﻿@model IdentitySample.Models.Truck
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Truck</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.truckId)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RegistrationNo, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.RegistrationNo, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.RegistrationNo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.size, "size in metre Cubes", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.ValidationMessageFor(model => model.size, "", new { @class = "text-danger" })
+            @Html.DropDownList(
+                "size",
+                new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "8m^3", Value = "8" },
+                    new SelectListItem { Text = "10m^3", Value = "10" },
+                    new SelectListItem { Text = "12m^3", Value = "12" },
+                    new SelectListItem { Text = "15m^3", Value = "15" },
+                    new SelectListItem { Text = "18m^3", Value = "18" },
+                    new SelectListItem { Text = "20m^3", Value = "20" },
+                    new SelectListItem { Text = "22m^3", Value = "22" }
+                },
+                "Choose an option", new { @class = "form-control" }
+            )
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.twoColour, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.twoColour)
+                @Html.ValidationMessageFor(model => model.twoColour, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.colour, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.colour, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.colour, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.colour2, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.colour2, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.colour2, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

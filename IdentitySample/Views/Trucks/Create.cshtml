@@ -1,0 +1,150 @@
+﻿@model IdentitySample.Models.Truck
+@*@model IEnumerable<IdentitySample.Models.Truck>*@
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm("Create", "Trucks", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Truck</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.RegistrationNo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RegistrationNo, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RegistrationNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="file" value="Upload File" class="form-control" />
+                @Html.ValidationMessageFor(model => model.RegistrationNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Truck Brand Dropdown -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.truckBrandId, "Truck Brand", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.truckBrandId, ViewBag.MakeList as SelectList, "--Select Make--", new { @class = "form-control", @id = "truckBrandId" })
+                @Html.ValidationMessageFor(model => model.truckBrandId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Truck Model Dropdown -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.truckModelId, "Truck Model", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.truckModelId, ViewBag.ModelList as SelectList, "--Select Model--", new { @class = "form-control", @id = "truckModelId" })
+                @Html.ValidationMessageFor(model => model.truckModelId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.size, "size in metre Cubes", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ValidationMessageFor(model => model.size, "", new { @class = "text-danger" })
+                @Html.DropDownList(
+                    "size",
+                    new List<SelectListItem>
+                    {
+                        new SelectListItem { Text = "8m³", Value = "8" },
+                        new SelectListItem { Text = "10m³", Value = "10" },
+                        new SelectListItem { Text = "12m³", Value = "12" },
+                        new SelectListItem { Text = "15m³", Value = "15" },
+                        new SelectListItem { Text = "18m³", Value = "18" },
+                        new SelectListItem { Text = "20m³", Value = "20" },
+                        new SelectListItem { Text = "22m³", Value = "22" }
+                    },
+                    "Choose an option", new { @class = "form-control" }
+                )
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(m => m.twoColour, new { id = "twoColourCheckbox" })
+                    @Html.LabelFor(m => m.twoColour, "Add second colour?")
+                    @Html.ValidationMessageFor(model => model.twoColour, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.colour, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.colour, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.colour, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" id="secondColourContainer" style="display: none;">
+            @Html.LabelFor(model => model.colour2, "Second Colour", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.colour2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.colour2, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#truckBrandId").change(function () {
+            var selectedBrandId = $(this).val();
+            $.getJSON('/Trucks/GetModelList', { truckBrandId: selectedBrandId }, function (data) {
+                var modelDropdown = $("#truckModelId");
+                modelDropdown.empty();
+                modelDropdown.append('<option value="">--Select Model--</option>');
+                $.each(data, function (index, row) {
+                    modelDropdown.append($('<option/>', {
+                        value: row.truckModelId,
+                        text: row.Name
+                    }));
+                });
+            });
+        });
+    });
+</script>
+<script>
+    $(function () {
+        function toggleSecondColour() {
+            if ($("#twoColourCheckbox").is(":checked")) {
+                $("#secondColourContainer").show();
+            } else {
+                $("#secondColourContainer").hide();
+            }
+        }
+
+        // Initial toggle on page load
+        toggleSecondColour();
+
+        // Toggle on checkbox change
+        $("#twoColourCheckbox").change(function () {
+            toggleSecondColour();
+        });
+    });
+</script>

@@ -47,6 +47,7 @@ namespace IdentitySample.Models
             return new ApplicationDbContext();
         }
         public DbSet<Driver> Drivers { get; set; }
+        public DbSet<SiteOperator> SiteOperators { get; set; }
         public DbSet<LicenceCode> LicenceCodes { get; set; }
         public DbSet<TruckBrand> TruckBrands { get; set; }
         public DbSet<TruckModel> TruckModels{ get; set; }

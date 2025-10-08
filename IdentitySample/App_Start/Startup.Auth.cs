@@ -197,9 +197,49 @@ namespace IdentitySample
                 s.licenceNumber = "8739000070HX";
                 s.validFrom = DateTime.Parse("2021-03-21");
                 s.validTo = DateTime.Parse("2025-03-21");
-
-        s.firstIssue = "24-03-2015";
+                s.firstIssue = "24-03-2015";
                 db.Drivers.Add(s);
+                db.SaveChanges();
+
+            }
+            if (!roleManager.RoleExists("SiteOperator"))
+            {
+                var Trole = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                Trole.Name = "SiteOperator";
+                roleManager.Create(Trole);
+
+                //create default Staff user
+                var Tuser = new ApplicationUser();
+                Tuser.title = "Mr";
+                Tuser.UserName = "2025500@truck1.ac.za";
+                Tuser.Email = "2025500@truck1.ac.za";
+                Tuser.FirstName = "Nkanyiso";
+                Tuser.LastName = "Shabalala";
+                Tuser.Address = "12 Zuma rd, Durban West, 3610";
+                Tuser.gender = "Male";
+                Tuser.IDno = "9609076608087";
+                Tuser.PhoneNumber = "0781234567";
+                Tuser.DoB = "07-09-1996";
+                var dnewuser = userManager.Create(Tuser, pwd);
+                if (dnewuser.Succeeded)
+                {
+                    userManager.AddToRole(Tuser.Id, "SiteOperator");
+                }
+                SiteOperator so = new SiteOperator();
+                Random r = new Random();
+                so.EmpId = Guid.NewGuid().ToString();
+                so.userId = Tuser.Id;
+                so.title = Tuser.title;
+                so.FirstName = Tuser.FirstName;
+                so.LastName = Tuser.LastName;
+                so.Address = Tuser.Address;
+                so.IDno = Tuser.IDno;
+                so.gender = Tuser.gender;
+                so.phoneNo = Tuser.PhoneNumber;
+                so.DoB = Tuser.DoB;
+                so.Email = Tuser.Email;
+                so.employeeNumber = "2025500";
+                db.SiteOperators.Add(so);
                 db.SaveChanges();
 
             }

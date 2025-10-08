@@ -50,7 +50,12 @@ namespace IdentitySample.Models
     {
 
     }
-    public class Driver : Employee
+
+    public class SiteOperator : Employee
+    {
+
+    }
+        public class Driver : Employee
     {
         public string licenceNumber { get; set; }
         [Required]
